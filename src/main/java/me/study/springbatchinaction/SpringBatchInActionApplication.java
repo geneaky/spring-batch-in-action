@@ -1,0 +1,15 @@
+package me.study.springbatchinaction;
+
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@EnableBatchProcessing
+public class SpringBatchInActionApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(SpringBatchInActionApplication.class, args);
+  }
+
+}
