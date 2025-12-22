@@ -18,6 +18,8 @@ public class TestRunner implements ApplicationRunner {
     private final JobExecutionConfiguration jobExecutionConfiguration;
     private final StepConfiguration stepConfiguration;
     private final StepExecutionConfiguration stepExecutionConfiguration;
+    private final StepContributionConfiguration stepContributionConfiguration;
+    private final ExecutionContextConfiguration executionContextConfiguration;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -30,6 +32,8 @@ public class TestRunner implements ApplicationRunner {
 //        jobLauncher.run(jobConfiguration.job(), jobParameters);
 //        jobLauncher.run(jobExecutionConfiguration.job(), jobParameters);
 //        jobLauncher.run(stepConfiguration.job(), jobParameters);
-        jobLauncher.run(stepExecutionConfiguration.job(), new JobParameters());
+//        jobLauncher.run(stepExecutionConfiguration.job(), new JobParameters());
+//        jobLauncher.run(stepContributionConfiguration.job(), new JobParameters());
+        jobLauncher.run(executionContextConfiguration.job(), new JobParameters());
     }
 }
