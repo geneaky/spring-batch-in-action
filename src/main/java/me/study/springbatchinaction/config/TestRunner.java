@@ -1,6 +1,7 @@
 package me.study.springbatchinaction.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -16,6 +17,7 @@ public class TestRunner implements ApplicationRunner {
     private final JobConfiguration jobConfiguration;
     private final JobExecutionConfiguration jobExecutionConfiguration;
     private final StepConfiguration stepConfiguration;
+    private final StepExecutionConfiguration stepExecutionConfiguration;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -27,6 +29,7 @@ public class TestRunner implements ApplicationRunner {
 
 //        jobLauncher.run(jobConfiguration.job(), jobParameters);
 //        jobLauncher.run(jobExecutionConfiguration.job(), jobParameters);
-        jobLauncher.run(stepConfiguration.job(), jobParameters);
+//        jobLauncher.run(stepConfiguration.job(), jobParameters);
+        jobLauncher.run(stepExecutionConfiguration.job(), new JobParameters());
     }
 }
