@@ -1,11 +1,13 @@
 package me.study.springbatchinaction.config;
 
 import lombok.extern.slf4j.Slf4j;
+import me.study.springbatchinaction.listener.JobRepositoryListener;
 import me.study.springbatchinaction.tasklet.ExecutionContextTasklet1;
 import me.study.springbatchinaction.tasklet.ExecutionContextTasklet2;
 import me.study.springbatchinaction.tasklet.ExecutionContextTasklet3;
 import me.study.springbatchinaction.tasklet.ExecutionContextTasklet4;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
@@ -27,11 +29,12 @@ public class ExecutionContextConfiguration {
     private final ExecutionContextTasklet2 executionContextTasklet2;
     private final ExecutionContextTasklet3 executionContextTasklet3;
     private final ExecutionContextTasklet4 executionContextTasklet4;
+    private final JobRepositoryListener jobRepositoryListener;
 
     public ExecutionContextConfiguration(JobRepository jobRepository,
             PlatformTransactionManager transactionManager,
             @Qualifier("stepTaskExecutor") TaskExecutor taskExecutor, ExecutionContextTasklet1 executionContextTasklet1, ExecutionContextTasklet2 executionContextTasklet2,
-            ExecutionContextTasklet3 executionContextTasklet3, ExecutionContextTasklet4 executionContextTasklet4) {
+            ExecutionContextTasklet3 executionContextTasklet3, ExecutionContextTasklet4 executionContextTasklet4, JobRepositoryListener jobRepositoryListener) {
         this.jobRepository = jobRepository;
         this.transactionManager = transactionManager;
         this.taskExecutor = taskExecutor;
@@ -39,6 +42,7 @@ public class ExecutionContextConfiguration {
         this.executionContextTasklet2 = executionContextTasklet2;
         this.executionContextTasklet3 = executionContextTasklet3;
         this.executionContextTasklet4 = executionContextTasklet4;
+        this.jobRepositoryListener = jobRepositoryListener;
     }
 
     public Job job() {
@@ -47,6 +51,7 @@ public class ExecutionContextConfiguration {
                 .next(step2())
                 .next(step3())
                 .next(step4())
+                .listener(jobRepositoryListener)
                 .build();
     }
 

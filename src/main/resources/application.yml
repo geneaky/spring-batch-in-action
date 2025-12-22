@@ -13,8 +13,8 @@ spring:
       enabled: false
   sql:
     init:
-      mode: never
-#      mode: always
+#      mode: never
+      mode: always
       schema-locations:
         - classpath:db/01-schema-drop-postgresql.sql
         - classpath:db/02-schema-postgresql.sql
