@@ -10,10 +10,9 @@ spring:
     password: password
   batch:
     job:
-      enabled: false
+      enabled: true
   sql:
     init:
-#      mode: never
       mode: always
       schema-locations:
         - classpath:db/01-schema-drop-postgresql.sql

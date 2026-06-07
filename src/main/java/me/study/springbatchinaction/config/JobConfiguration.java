@@ -7,7 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.builder.JobBuilderHelper;
+import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -35,8 +38,9 @@ public class JobConfiguration {
 
     public Job job() {
         return new JobBuilder("job", jobRepository)
-                .start(step1())
-                .next(step2())
+                .start(flow1())
+                .next(step1())
+                .end()
                 .build();
     }
 
@@ -66,6 +70,16 @@ public class JobConfiguration {
                 }, transactionManager)
                 .taskExecutor(taskExecutor)
                 .build();
+    }
+
+    private Flow flow1() {
+        FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("flow1");
+        flowBuilder
+                .start(step1())
+                .next(step2())
+                .end();
+
+        return flowBuilder.build();
     }
 
 }
