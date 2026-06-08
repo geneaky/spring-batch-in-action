@@ -2,6 +2,7 @@ package me.study.springbatchinaction.config;
 
 import lombok.RequiredArgsConstructor;
 import me.study.springbatchinaction.job.SimpleJobManager;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -37,6 +38,8 @@ public class TestRunner implements ApplicationRunner {
 //        jobLauncher.run(stepExecutionConfiguration.job(), new JobParameters());
 //        jobLauncher.run(stepContributionConfiguration.job(), new JobParameters());
 //        jobLauncher.run(executionContextConfiguration.job(), new JobParameters());
-        jobLauncher.run(simpleJobManager.batchJob(), jobParameters);
+        Job job = simpleJobManager.batchJob();
+        JobParameters next = job.getJobParametersIncrementer().getNext(jobParameters);
+        jobLauncher.run(job, next);
     }
 }
