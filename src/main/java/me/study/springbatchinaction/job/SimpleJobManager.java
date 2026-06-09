@@ -32,8 +32,8 @@ public class SimpleJobManager {
     @Bean
     public Job batchJob() {
         return new JobBuilder("simplejob-test", jobRepository)
-                .start(stepManager.step1())
-                .next(stepManager.step2())
+                .start(stepManager.step2())
+                .next(stepManager.step1())
                 .next(stepManager.step3())
 //                .preventRestart()
 //                .incrementer(new CustomJobParametersIncrementer())

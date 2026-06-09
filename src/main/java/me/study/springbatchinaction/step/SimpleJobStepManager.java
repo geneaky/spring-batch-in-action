@@ -1,5 +1,6 @@
 package me.study.springbatchinaction.step;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Step;
@@ -21,11 +22,21 @@ public class SimpleJobStepManager {
 
 
     public Step step1() {
+//        LocalDateTime now = LocalDateTime.now().plusSeconds(5);
         return new StepBuilder("simplejob-step1", jobRepository)
                 .tasklet((stepContribution, chunkContext) -> {
                     log.info("Executing simplejob-step1");
-                    return RepeatStatus.FINISHED;
+//                    if(LocalDateTime.now().isBefore(now)) {
+//                        return RepeatStatus.CONTINUABLE;
+//                    }
+                    if(1==1) {
+                        throw new RuntimeException("step1 was failed");
+                    }
+
+                    return null;
                 }, transactionManager)
+                .startLimit(3)
+//                .allowStartIfComplete(true)
                 .taskExecutor(taskExecutor)
                 .build();
     }
@@ -37,6 +48,8 @@ public class SimpleJobStepManager {
                     return RepeatStatus.FINISHED;
                 }, transactionManager)
                 .taskExecutor(taskExecutor)
+                .startLimit(1)
+                .allowStartIfComplete(true)
                 .build();
     }
 

@@ -23,6 +23,7 @@ public class TestRunner implements ApplicationRunner {
     private final StepContributionConfiguration stepContributionConfiguration;
     private final ExecutionContextConfiguration executionContextConfiguration;
     private final SimpleJobManager simpleJobManager;
+    private final JobStepConfiguration jobStepConfiguration;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -38,8 +39,6 @@ public class TestRunner implements ApplicationRunner {
 //        jobLauncher.run(stepExecutionConfiguration.job(), new JobParameters());
 //        jobLauncher.run(stepContributionConfiguration.job(), new JobParameters());
 //        jobLauncher.run(executionContextConfiguration.job(), new JobParameters());
-        Job job = simpleJobManager.batchJob();
-        JobParameters next = job.getJobParametersIncrementer().getNext(jobParameters);
-        jobLauncher.run(job, next);
+        jobLauncher.run(jobStepConfiguration.parentJob(), new JobParameters());
     }
 }
